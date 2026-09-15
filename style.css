@@ -377,12 +377,78 @@ body {
   z-index: 10;
   overflow: hidden;
   width: 100%;
+  background-color: var(--bg-primary);
   background-image:
     linear-gradient(to right, rgba(32, 37, 41, 0.96) 0%, rgba(32, 37, 41, 0.88) 40%, rgba(32, 37, 41, 0.4) 75%, rgba(32, 37, 41, 0.85) 100%),
     url('assets/images/hero-bg.webp');
   background-position: center right;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/* ==========================================================================
+   HERO VIDEO BACKGROUND SYSTEM
+   ========================================================================== */
+.hero-video-bg-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  opacity: 0.95;
+  filter: brightness(1.0) contrast(1.06) saturate(1.15);
+  will-change: transform;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(20, 24, 27, 0.78) 0%,
+    rgba(20, 24, 27, 0.55) 42%,
+    rgba(20, 24, 27, 0.15) 72%,
+    rgba(20, 24, 27, 0.45) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-video-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 75% 35%, rgba(92, 255, 138, 0.08) 0%, transparent 60%),
+              radial-gradient(circle at 20% 70%, rgba(201, 168, 91, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-section > .container {
+  position: relative;
+  z-index: 5;
 }
 
 .hero-container {
@@ -2693,6 +2759,16 @@ body {
     gap: 36px;
   }
 
+  .hero-video-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 30, 34, 0.94) 0%,
+      rgba(26, 30, 34, 0.85) 35%,
+      rgba(26, 30, 34, 0.60) 65%,
+      rgba(26, 30, 34, 0.92) 100%
+    );
+  }
+
   .benefit-cards-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2815,27 +2891,37 @@ body {
 
   /* Hero Mobile */
   .hero-section {
-    padding-top: 80px;
-    padding-bottom: 30px;
-    background-image:
-      linear-gradient(180deg,
-        rgba(20, 24, 27, 0.45) 0%,
-        rgba(20, 24, 27, 0.20) 40%,
-        rgba(20, 24, 27, 0.55) 75%,
-        rgba(20, 24, 27, 0.90) 100%),
-      url('assets/images/hero-bg.webp');
-    background-position: 70% center;
-    background-size: cover;
+    padding-top: 75px;
+    padding-bottom: 28px;
+    background-color: var(--bg-primary);
+    background-image: none;
+  }
+
+  .hero-video-bg {
+    object-position: 50% 28%;
+    opacity: 0.92;
+    filter: brightness(0.98) contrast(1.06) saturate(1.15);
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+
+  .hero-video-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(20, 24, 27, 0.72) 0%,
+      rgba(20, 24, 27, 0.48) 32%,
+      rgba(20, 24, 27, 0.22) 65%,
+      rgba(20, 24, 27, 0.82) 100%
+    );
   }
 
   .hero-container {
-    gap: 24px;
+    gap: 22px;
   }
 
   .hero-headline {
     font-size: 25px;
     line-height: 1.2;
-    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 0, 0, 0.8);
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.95), 0 0 32px rgba(0, 0, 0, 0.9);
   }
 
   .hero-subline-gold {
@@ -2848,7 +2934,7 @@ body {
     font-size: 13.5px;
     margin-bottom: 18px;
     color: #E2E8F0;
-    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.95);
   }
 
   .hero-cta-group {
@@ -2858,7 +2944,11 @@ body {
   .btn-hero-glass {
     width: 100%;
     justify-content: center;
-    padding: 11px 18px;
+    padding: 12px 18px;
+    background: rgba(26, 30, 34, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(201, 168, 91, 0.25);
   }
 
   .hero-benefit-pills {
@@ -2867,7 +2957,7 @@ body {
     align-items: flex-start;
     gap: 6px;
     width: fit-content;
-    max-width: 75%;
+    max-width: 80%;
   }
 
   .benefit-pill {
@@ -2877,9 +2967,14 @@ body {
     align-items: center;
     text-align: left;
     gap: 8px;
-    padding: 5px 12px;
+    padding: 6px 14px;
     box-sizing: border-box;
     border-radius: var(--radius-sm);
+    background: rgba(26, 30, 34, 0.68);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   }
 
   .benefit-pill .pill-icon {

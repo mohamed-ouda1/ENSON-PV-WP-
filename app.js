@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Initialize Lead Form & Toast Notification
   initLeadForm();
+
+  // 6. Initialize Hero Background Video (Mobile Autoplay Safeguard)
+  initHeroBackgroundVideo();
 });
 
 /* ==========================================================================
@@ -591,4 +594,36 @@ function initLeadForm() {
       }
     });
   }
+}
+
+/* ==========================================================================
+   6. HERO DYNAMIC BACKGROUND VIDEO INITIALIZER & MOBILE SAFEGUARD
+   ========================================================================== */
+function initHeroBackgroundVideo() {
+  const video = document.querySelector('.hero-video-bg');
+  if (!video) return;
+
+  video.muted = true;
+  video.defaultMuted = true;
+
+  const tryPlay = () => {
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Browser prevented autoplay (e.g., iOS Low Power Mode).
+        // Poster image remains visible, and we listen for first touch to resume smoothly.
+        const onFirstTouch = () => {
+          video.play().catch(() => {});
+          window.removeEventListener('touchstart', onFirstTouch);
+          window.removeEventListener('scroll', onFirstTouch);
+          window.removeEventListener('click', onFirstTouch);
+        };
+        window.addEventListener('touchstart', onFirstTouch, { passive: true, once: true });
+        window.addEventListener('scroll', onFirstTouch, { passive: true, once: true });
+        window.addEventListener('click', onFirstTouch, { passive: true, once: true });
+      });
+    }
+  };
+
+  tryPlay();
 }
