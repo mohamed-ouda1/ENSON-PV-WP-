@@ -52,7 +52,7 @@ function initEnergyCanvas() {
   window.addEventListener('resize', onWindowResize, { passive: true });
 
   const particles = [];
-  const particleCount = 42;
+  const particleCount = window.matchMedia('(max-width: 768px)').matches ? 20 : 28;
 
   // ==========================================================================
   // ENERGY PATHS – matched to hero-house.webp layout
@@ -231,7 +231,13 @@ function initEnergyCanvas() {
     ctx.restore();
   }
 
+  let animationFrameId = null;
+  let isCanvasVisible = true;
+
   function animate() {
+    animationFrameId = null;
+    if (!isCanvasVisible) return;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPaths();
 
@@ -240,7 +246,15 @@ function initEnergyCanvas() {
       p.draw(ctx);
     });
 
-    requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isCanvasVisible = entry.isIntersecting;
+      if (isCanvasVisible && animationFrameId === null) animate();
+    });
+    visibilityObserver.observe(canvas);
   }
 
   animate();

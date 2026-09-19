@@ -58,7 +58,7 @@
   --font-script: 'Caveat', cursive, sans-serif;
 
   /* Glassmorphism Specs */
-  --glass-blur: blur(16px);
+  --glass-blur: blur(10px);
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -809,8 +809,8 @@ body {
   padding: 24px 20px 22px 20px;
   border-radius: var(--radius-lg, 18px);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 45%, rgba(143, 152, 159, 0.04) 100%), rgba(24, 28, 32, 0.72);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 0 rgba(0, 0, 0, 0.35);
   display: flex;
