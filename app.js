@@ -4,22 +4,19 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize Animated Energy Flow Canvas in Hero
-  initEnergyCanvas();
-
-  // 2. Initialize KfW Subsidy Calculator
+  // 1. Initialize KfW Subsidy Calculator
   initSubsidyCalculator();
 
-  // 3. Initialize 3D Modal & Interactive Badges
+  // 2. Initialize 3D Modal & Interactive Badges
   init3DModal();
 
-  // 4. Initialize Mobile Menu Navigation & Smooth Scrolling
+  // 3. Initialize Mobile Menu Navigation & Smooth Scrolling
   initNavigation();
 
-  // 5. Initialize Lead Form & Toast Notification
+  // 4. Initialize Lead Form & Toast Notification
   initLeadForm();
 
-  // 6. Initialize Hero Background Video (Mobile Autoplay Safeguard)
+  // 5. Initialize Hero Background Video (Mobile Autoplay Safeguard)
   initHeroBackgroundVideo();
 });
 
@@ -55,91 +52,72 @@ function initEnergyCanvas() {
   const particleCount = window.matchMedia('(max-width: 768px)').matches ? 20 : 28;
 
   // ==========================================================================
-  // ENERGY PATHS – matched to hero-house.webp layout
-  // Image key positions:
-  //   PV panels:       roof left  ~ x:0.28–0.50, y:0.12–0.42
-  //   Left wall:       x≈0.27,    down from y:0.42 to y:0.62
-  //   Heat pump:       x≈0.32–0.36, y≈0.65–0.80
-  //   Battery storage: x≈0.11–0.16, y≈0.60–0.75
-  //   House interior (warm): x:0.40–0.70, y:0.45–0.70
-  //   Wallbox charger:  x≈0.77–0.80, y≈0.55–0.73
+  // ENERGY PATHS – aligned with the hero-house video frame
   // ==========================================================================
   const paths = [
-
-    // ── SOLAR PATH 1: PV panel center → roof edge → down left wall → heat pump
     {
       type: 'solar',
       color: '#FFD060',
       glow: '#FFC940',
       strokeColor: 'rgba(255, 200, 60, 0.45)',
       points: [
-        { x: 0.38, y: 0.20 }, // ☀ PV panel center (Solarmodul Mitte)
-        { x: 0.32, y: 0.38 }, // roof bottom edge → left wall begins
-        { x: 0.27, y: 0.50 }, // down left wall (Wechselrichter)
-        { x: 0.27, y: 0.62 }, // connection box on wall
-        { x: 0.32, y: 0.68 }, // → heat pump base
-        { x: 0.34, y: 0.73 }  // 🔵 Wärmepumpe Außeneinheit
+        { x: 0.52, y: 0.28 },
+        { x: 0.48, y: 0.39 },
+        { x: 0.44, y: 0.47 },
+        { x: 0.44, y: 0.58 },
+        { x: 0.40, y: 0.64 },
+        { x: 0.40, y: 0.72 }
       ]
     },
-
-    // ── SOLAR PATH 2: PV → roof ridge → right side → wallbox / interior
     {
       type: 'solar',
       color: '#E5C96A',
       glow: '#FFD269',
       strokeColor: 'rgba(229, 200, 100, 0.38)',
       points: [
-        { x: 0.38, y: 0.20 }, // PV panel
-        { x: 0.47, y: 0.27 }, // ridge top
-        { x: 0.55, y: 0.36 }, // right wall upper
-        { x: 0.58, y: 0.47 }, // down right-side wall
-        { x: 0.60, y: 0.60 }, // mid-height right wall
-        { x: 0.60, y: 0.68 }  // horizontal base rail
+        { x: 0.52, y: 0.28 },
+        { x: 0.61, y: 0.38 },
+        { x: 0.66, y: 0.48 },
+        { x: 0.66, y: 0.57 },
+        { x: 0.80, y: 0.57 },
+        { x: 0.88, y: 0.57 }
       ]
     },
-
-    // ── SOLAR PATH 3: roof → horizontal conduit along top of ground floor → wallbox
-    {
-      type: 'solar',
-      color: '#D8C27A',
-      glow: '#FFE18E',
-      strokeColor: 'rgba(216, 194, 122, 0.30)',
-      points: [
-        { x: 0.60, y: 0.68 }, // from mid-wall conduit
-        { x: 0.68, y: 0.68 }, // horizontal ground-floor conduit
-        { x: 0.76, y: 0.68 }, // approaching wallbox
-        { x: 0.79, y: 0.64 }  // ⚡ Wallbox / EV charger
-      ]
-    },
-
-    // ── HEAT PATH 1: heat pump → horizontal base → battery storage (left)
     {
       type: 'thermal',
       color: '#5CFF8A',
       glow: '#10E88A',
       strokeColor: 'rgba(92, 255, 138, 0.40)',
       points: [
-        { x: 0.34, y: 0.73 }, // Wärmepumpe
-        { x: 0.23, y: 0.73 }, // horizontal pipe left
-        { x: 0.14, y: 0.73 }, // battery area base
-        { x: 0.12, y: 0.66 }  // 🔋 Batteriespeicher
+        { x: 0.40, y: 0.72 },
+        { x: 0.48, y: 0.72 },
+        { x: 0.56, y: 0.67 },
+        { x: 0.66, y: 0.67 },
+        { x: 0.66, y: 0.57 }
       ]
     },
-
-    // ── HEAT PATH 2: heat pump → along base → into house interior (floor heating)
     {
       type: 'thermal',
       color: '#5CFF8A',
       glow: '#10E88A',
       strokeColor: 'rgba(92, 255, 138, 0.40)',
       points: [
-        { x: 0.34, y: 0.73 }, // Wärmepumpe
-        { x: 0.42, y: 0.72 }, // → along base rail right
-        { x: 0.52, y: 0.71 }, // under sliding door
-        { x: 0.62, y: 0.70 }, // interior right (Fußbodenheizung)
-        { x: 0.62, y: 0.56 }, // → up interior right wall
-        { x: 0.55, y: 0.46 }, // ♨ upper floor heating symbol
-        { x: 0.48, y: 0.40 }  // Obergeschoss
+        { x: 0.40, y: 0.72 },
+        { x: 0.31, y: 0.72 },
+        { x: 0.22, y: 0.72 },
+        { x: 0.18, y: 0.66 }
+      ]
+    },
+    {
+      type: 'thermal',
+      color: '#5CFF8A',
+      glow: '#10E88A',
+      strokeColor: 'rgba(92, 255, 138, 0.40)',
+      points: [
+        { x: 0.66, y: 0.57 },
+        { x: 0.75, y: 0.57 },
+        { x: 0.84, y: 0.57 },
+        { x: 0.84, y: 0.49 }
       ]
     },
 
@@ -222,10 +200,12 @@ function initEnergyCanvas() {
       for (let i = 1; i < p.points.length; i++) {
         ctx.lineTo(p.points[i].x * canvas.width, p.points[i].y * canvas.height);
       }
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
       ctx.strokeStyle = p.strokeColor;
-      ctx.lineWidth = 2.2;
+      ctx.lineWidth = 2.6;
       ctx.shadowColor = p.glow;
-      ctx.shadowBlur = 6;
+      ctx.shadowBlur = 8;
       ctx.stroke();
     });
     ctx.restore();

@@ -635,7 +635,7 @@ body {
 }
 
 .hero-main-video {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
 }
 
 .energy-flow-canvas {
@@ -683,7 +683,7 @@ body {
 .hp-marker {
   position: absolute;
   top: 70%;
-  left: 35.5%;
+  left: 50%;
   z-index: 4;
 }
 
@@ -1067,7 +1067,7 @@ body {
   box-shadow: 0 0 12px var(--neon-green), 0 0 6px #38bdf8;
   position: absolute;
   top: 50%;
-  animation: waveFlow 3s infinite linear;
+  left: 39.5%;
 }
 
 @keyframes waveFlow {
