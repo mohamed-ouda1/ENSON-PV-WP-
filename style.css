@@ -400,7 +400,7 @@ body {
   pointer-events: none;
 }
 
-.hero-video-bg {
+.hero-bg-image {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -625,12 +625,17 @@ body {
   width: 100%;
 }
 
-.hero-main-img {
+.hero-main-img,
+.hero-main-video {
   width: 100%;
   height: auto;
   display: block;
   object-fit: cover;
   border-radius: var(--radius-lg);
+}
+
+.hero-main-video {
+  aspect-ratio: 16 / 10;
 }
 
 .energy-flow-canvas {
@@ -2897,7 +2902,7 @@ body {
     background-image: none;
   }
 
-  .hero-video-bg {
+  .hero-bg-image {
     object-position: 50% 28%;
     opacity: 0.92;
     filter: brightness(0.98) contrast(1.06) saturate(1.15);
