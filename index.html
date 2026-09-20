@@ -69,7 +69,7 @@
   <section class="hero-section" id="hero">
     <!-- HERO IMAGE BACKGROUND -->
     <div class="hero-video-bg-container" aria-hidden="true">
-      <img class="hero-bg-image" src="assets/images/hero.jpg" alt="">
+      <img class="hero-bg-image" src="assets/images/hero.webp" alt="">
       <div class="hero-video-overlay"></div>
     </div>
 
@@ -156,7 +156,7 @@
         <div class="hero-right">
           <div class="hero-image-wrapper">
             <video class="hero-main-video" autoplay muted loop playsinline webkit-playsinline preload="auto"
-              poster="assets/images/hero-house.webp" aria-label="Modernes Gebäude mit ENSON Photovoltaikanlage und Wärmepumpe">
+              poster="assets/images/hero.webp" aria-label="Modernes Gebäude mit ENSON Photovoltaikanlage und Wärmepumpe">
               <source src="hero-house.webm" type="video/webm">
             </video>
 
@@ -197,11 +197,11 @@
 
         <article class="energy-step energy-step-control">
           <div class="energy-step-icon energy-step-image-wrap">
-            <img src="IMG_2026%203.webp" alt="Smart Energy" loading="lazy">
+            <img src="IMG_2026%203.webp" alt="Intelligente Energie" loading="lazy">
           </div>
           <div>
             <span class="energy-step-number">02</span>
-            <h3>Smart Energy</h3>
+            <h3>Intelligente Energie</h3>
             <p>Das System verteilt den Strom automatisch dorthin, wo er gebraucht wird.</p>
           </div>
         </article>
@@ -216,6 +216,17 @@
             <p>Aus Solarstrom entsteht effiziente, komfortable Wärme für Ihr Zuhause.</p>
           </div>
         </article>
+      </div>
+
+      <div class="energy-synergy-cta">
+        <a href="#calculator" class="btn-hero-glass">
+          <span>Jetzt Angebot berechnen</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
@@ -324,15 +335,15 @@
         <div class="solutions-left">
           <div class="indoor-visual-card glass-card">
             <div class="image-frame-indoor">
-              <img src="assets/images/indoor-room.jpg" alt="Fachgerechte PV & Wärmepumpen Inneninstallation"
+              <img src="assets/images/indoor-room.webp" alt="Fachgerechte PV & Wärmepumpen Inneninstallation"
                 class="indoor-main-img" loading="lazy">
             </div>
 
             <!-- Floating 3D House Cutaway Badge -->
             <div class="cutaway-floating-badge glass-card" id="cutawayTrigger">
-              <img src="assets/images/house-3d-model.jpg" alt="3D Smart Heating & Solar Visualisierung" class="cutaway-thumb" loading="lazy">
+              <img src="assets/images/house-3d-model.webp" alt="3D-Visualisierung von Heizung und Solarenergie" class="cutaway-thumb" loading="lazy">
               <div class="cutaway-info">
-                <span class="badge-tag">3D SYSTEM-VERBUND</span>
+                <span class="badge-tag">3D-SYSTEMVERBUND</span>
                 <span class="badge-sub">PV-Strom + Wärmepumpe im Haus (Klick)</span>
               </div>
             </div>
@@ -996,12 +1007,11 @@
         <!-- PROJECT 1: Viessmann Inneneinheit & Solarspeicher -->
         <div class="project-card glass-card">
           <div class="project-img-wrap">
-            <img src="assets/images/project-viessmann-indoor.jpg"
+            <img src="assets/images/PV-Kombispeicher & Inneneinheit.webp"
               alt="Viessmann Wärmepumpen Inneneinheit mit Solarpufferspeicher Montage durch ENSON" class="project-img"
               loading="lazy">
             <div class="project-overlay"></div>
             <div class="project-badges-bar">
-              <span class="proj-badge brand-badge">Viessmann System</span>
               <span class="proj-badge tech-badge">PV-Kombispeicher & Inneneinheit</span>
             </div>
           </div>
@@ -1010,11 +1020,10 @@
         <!-- PROJECT 2: Viessmann Außeneinheit & PV-Anbindung -->
         <div class="project-card glass-card">
           <div class="project-img-wrap">
-            <img src="assets/images/project-viessmann-outdoor.jpg"
+            <img src="assets/images/Wärmepumpe & Solar-Direktantrieb.webp"
               alt="Viessmann Vitocal Außeneinheit gekoppelt an Photovoltaik-Dachanlage" class="project-img" loading="lazy">
             <div class="project-overlay"></div>
             <div class="project-badges-bar">
-              <span class="proj-badge brand-badge">Viessmann Vitocal</span>
               <span class="proj-badge tech-badge">Wärmepumpe & Solar-Direktantrieb</span>
             </div>
           </div>
@@ -1023,12 +1032,11 @@
         <!-- PROJECT 3: Vaillant aroTHERM plus Außengerät -->
         <div class="project-card glass-card">
           <div class="project-img-wrap">
-            <img src="assets/images/project-vaillant-outdoor.jpg"
+            <img src="assets/images/Flüsterleise PV-Hybridtechnik.webp"
               alt="Vaillant aroTHERM plus Wärmepumpe mit solarer Eigenverbrauchsoptimierung" class="project-img"
               loading="lazy">
             <div class="project-overlay"></div>
             <div class="project-badges-bar">
-              <span class="proj-badge brand-badge vaillant">Vaillant aroTHERM plus</span>
               <span class="proj-badge tech-badge">Flüsterleise PV-Hybridtechnik</span>
             </div>
           </div>
@@ -1316,7 +1324,7 @@
       <div class="modal-content glass-card">
         <button class="modal-close" id="modalClose" aria-label="Schließen">&times;</button>
         <div class="modal-body">
-          <img src="assets/images/house-3d-model.jpg" alt="3D Architektur Schnittmodell Photovoltaik & Wärmepumpe" class="modal-cutaway-img" loading="lazy">
+          <img src="assets/images/house-3d-model.webp" alt="3D-Architektur-Schnittmodell für Photovoltaik und Wärmepumpe" class="modal-cutaway-img" loading="lazy">
           <div class="modal-desc">
             <h3>Intelligenter Energie- & Wärmefluss im Gebäude</h3>
             <p>Das ENSON Gesamtsystem vernetzt Ihre Photovoltaikanlage auf dem Dach nahtlos mit Batteriespeicher, Wechselrichter und hocheffizienter Wärmepumpe. Der eigens produzierte Solarstrom speist prioritär die Wärmepumpe zur Heizung, Warmwasserbereitung und Sommerkühlung (Effizienzklasse A+++) – für bis zu 80% Unabhängigkeit vom öffentlichen Stromnetz.</p>
