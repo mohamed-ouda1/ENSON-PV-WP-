@@ -106,16 +106,6 @@ body {
   background: radial-gradient(circle at 50% 0%, #2D343B 0%, #22272B 45%, #1A1E22 100%);
 }
 
-/* Keep below-the-fold sections out of the initial render work. */
-.energy-synergy-section,
-.benefits-section,
-.solutions-section,
-.projects-section,
-.contact-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 700px;
-}
-
 .container {
   width: 100%;
   max-width: 1240px;
@@ -123,16 +113,19 @@ body {
   padding: 0 24px;
 }
 
-/* Ambient Background Layer (Restrained & Elegant) */
+/* Ambient Background Layer (Restrained, Elegant & GPU-Accelerated) */
 .ambient-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(80px);
   pointer-events: none;
   z-index: 0;
-  opacity: 0.3;
+  opacity: 0.28;
   max-width: 80vw;
   max-height: 80vw;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .glow-top-left {
@@ -179,9 +172,10 @@ body {
   background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;
+  transform: translateZ(0);
 }
 
-/* Common Glassmorphism Card Style */
+/* Common Glassmorphism Card Style - Hardware Accelerated */
 .glass-card {
   background: var(--bg-card);
   backdrop-filter: var(--glass-blur);
@@ -189,7 +183,9 @@ body {
   border: 1px solid var(--border-glass);
   box-shadow: var(--shadow-card);
   position: relative;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .glass-card:hover {
@@ -209,6 +205,7 @@ body {
   justify-content: center;
   padding: 0 20px;
   box-sizing: border-box;
+  transform: translateZ(0);
 }
 
 .navbar {
@@ -4057,10 +4054,11 @@ body {
   cursor: pointer;
   outline: none;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
 }
 
 .whatsapp-float-btn:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) translateZ(0);
 }
 
 .whatsapp-icon-wrap {
@@ -4119,6 +4117,7 @@ body {
   animation: waPulse 2.6s infinite cubic-bezier(0.25, 0, 0, 1);
   pointer-events: none;
   z-index: 1;
+  will-change: transform, opacity;
 }
 
 .whatsapp-pulse-ring.delay {
