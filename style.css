@@ -930,6 +930,8 @@ body {
 }
 
 .energy-step-image-wrap {
+  position: relative;
+  z-index: 1;
   overflow: visible;
   background: transparent;
   border: none;
@@ -937,6 +939,49 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.energy-step-image-wrap::before,
+.energy-step-image-wrap::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 58px;
+  height: 58px;
+  border: 1px solid var(--energy-pulse-color);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--energy-pulse-glow) 0%, transparent 68%);
+  box-shadow: 0 0 18px var(--energy-pulse-glow), inset 0 0 12px var(--energy-pulse-glow);
+  opacity: 0.5;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.72);
+  z-index: -1;
+  animation: energyImageWave 3.6s ease-out infinite;
+}
+
+.energy-step-image-wrap::after {
+  animation-delay: 1.8s;
+}
+
+.energy-step-solar .energy-step-image-wrap,
+.energy-step-heat .energy-step-image-wrap {
+  --energy-pulse-color: var(--gold-accent);
+  --energy-pulse-glow: rgba(216, 194, 122, 0.3);
+}
+
+.energy-step-control .energy-step-image-wrap::before {
+  --energy-pulse-color: var(--neon-green);
+  --energy-pulse-glow: rgba(92, 255, 138, 0.28);
+  animation-delay: 1.2s;
+}
+
+.energy-step-heat .energy-step-image-wrap::before {
+  animation-delay: 2.4s;
+}
+
+.energy-step-heat .energy-step-image-wrap::after {
+  animation-delay: 4.2s;
 }
 
 .energy-step-image-wrap img {
@@ -980,6 +1025,24 @@ body {
   to { transform: translateX(600%); }
 }
 
+@keyframes energyImageWave {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.72);
+  }
+  12% {
+    opacity: 0.62;
+  }
+  72% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.48);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.48);
+  }
+}
+
 @media (max-width: 700px) {
   .energy-synergy-section {
     padding: 34px 0 26px;
@@ -1021,6 +1084,13 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .energy-flow-line span {
     animation: none;
+  }
+
+  .energy-step-image-wrap::before,
+  .energy-step-image-wrap::after {
+    animation: none;
+    opacity: 0.42;
+    transform: translate(-50%, -50%) scale(0.92);
   }
 }
 
