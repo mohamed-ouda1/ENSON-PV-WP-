@@ -987,11 +987,11 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 76px;
-  height: 76px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--pulse-halo) 0%, transparent 72%);
-  filter: blur(10px);
+  filter: blur(8px);
   pointer-events: none;
   z-index: 0;
   transform: translate(-50%, -50%);
@@ -1004,16 +1004,16 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 68px;
-  height: 68px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   border: 1.5px solid var(--pulse-color);
   background: radial-gradient(circle, var(--pulse-core) 0%, transparent 66%);
-  box-shadow: 0 0 14px var(--pulse-glow), 0 0 28px var(--pulse-glow-outer), inset 0 0 10px var(--pulse-glow-inner);
+  box-shadow: 0 0 12px var(--pulse-glow), 0 0 24px var(--pulse-glow-outer), inset 0 0 8px var(--pulse-glow-inner);
   pointer-events: none;
   z-index: 0;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.66);
+  transform: translate(-50%, -50%) scale(0.65);
   animation: energyWaveSpread 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
   will-change: transform, opacity;
 }
@@ -1044,13 +1044,13 @@ body {
 }
 
 .energy-step:hover .energy-step-image-wrap img {
-  transform: scale(1.06) translateY(-2px);
-  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 12px var(--pulse-glow));
+  transform: scale(1.05) translateY(-2px);
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 10px var(--pulse-glow));
 }
 
 .energy-step:hover .energy-wave-halo {
-  filter: blur(12px) brightness(1.25);
-  transform: translate(-50%, -50%) scale(1.15);
+  filter: blur(10px) brightness(1.22);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .energy-step-solar .energy-step-icon { color: var(--gold-accent); border-color: transparent; }
@@ -1087,20 +1087,20 @@ body {
 @keyframes energyWaveSpread {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.66);
+    transform: translate(-50%, -50%) scale(0.65);
   }
   15% {
     opacity: 0.85;
   }
   45% {
-    opacity: 0.48;
+    opacity: 0.45;
   }
   78% {
-    opacity: 0.15;
+    opacity: 0.12;
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1.95);
+    transform: translate(-50%, -50%) scale(1.68);
   }
 }
 
