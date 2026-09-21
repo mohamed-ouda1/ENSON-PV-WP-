@@ -497,35 +497,39 @@ function initNavigation() {
   const navLinks = document.querySelectorAll('.nav-link');
 
   if (mobileToggle && navMenu) {
+    const setMenuState = (isOpen) => {
+      navMenu.classList.toggle('open', isOpen);
+      mobileToggle.classList.toggle('active', isOpen);
+      mobileToggle.setAttribute('aria-expanded', String(isOpen));
+      mobileToggle.setAttribute('aria-label', isOpen ? 'Menü schließen' : 'Menü öffnen');
+    };
+
+    mobileToggle.setAttribute('aria-controls', 'navMenu');
+    mobileToggle.setAttribute('aria-expanded', 'false');
     mobileToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = navMenu.classList.toggle('open');
-      mobileToggle.classList.toggle('active', isOpen);
+      setMenuState(!navMenu.classList.contains('open'));
     });
 
     navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        mobileToggle.classList.remove('active');
-      });
+      link.addEventListener('click', () => setMenuState(false));
     });
 
     document.addEventListener('click', (e) => {
       if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
-        navMenu.classList.remove('open');
-        mobileToggle.classList.remove('active');
+        setMenuState(false);
       }
     });
   }
 
   // Active Link Highlight on Scroll (throttled via requestAnimationFrame)
+  const sections = document.querySelectorAll('section[id]');
+  if (!sections.length) return;
   let isScrollTicking = false;
 
   function updateActiveNavOnScroll() {
     let current = '';
     const scrollPos = window.scrollY || window.pageYOffset || 0;
-    const sections = document.querySelectorAll('section[id]');
-
     sections.forEach(sec => {
       const secTop = sec.offsetTop - 140;
       const secHeight = sec.clientHeight;
@@ -594,7 +598,7 @@ function initLeadForm() {
    6. HERO DYNAMIC BACKGROUND VIDEO INITIALIZER & MOBILE SAFEGUARD
    ========================================================================== */
 function initHeroBackgroundVideo() {
-  const video = document.querySelector('.hero-video-bg');
+  const video = document.querySelector('.hero-main-video');
   if (!video) return;
 
   video.muted = true;

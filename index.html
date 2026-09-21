@@ -56,7 +56,7 @@
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </a>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Menü öffnen">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menü öffnen" aria-controls="navMenu" aria-expanded="false">
           <span></span>
           <span></span>
           <span></span>
@@ -69,7 +69,7 @@
   <section class="hero-section" id="hero">
     <!-- HERO IMAGE BACKGROUND -->
     <div class="hero-video-bg-container" aria-hidden="true">
-      <img class="hero-bg-image" src="assets/images/hero.webp" alt="">
+      <img class="hero-bg-image" src="assets/images/hero.webp" alt="" width="1264" height="843" fetchpriority="high" decoding="async">
       <div class="hero-video-overlay"></div>
     </div>
 
@@ -155,7 +155,7 @@
         <!-- HERO RIGHT VISUAL -->
         <div class="hero-right">
           <div class="hero-image-wrapper">
-            <video class="hero-main-video" autoplay muted loop playsinline webkit-playsinline preload="auto"
+            <video class="hero-main-video" autoplay muted loop playsinline webkit-playsinline preload="metadata"
               poster="assets/images/hero.webp" aria-label="Modernes Gebäude mit ENSON Photovoltaikanlage und Wärmepumpe">
               <source src="hero-house.webm" type="video/webm">
             </video>
@@ -186,7 +186,7 @@
 
         <article class="energy-step energy-step-solar">
           <div class="energy-step-icon energy-step-image-wrap">
-            <img src="IMG_2026%202.webp" alt="Solarstrom" loading="lazy">
+            <img src="IMG_2026%202.webp" alt="Solarstrom" width="628" height="537" loading="lazy" decoding="async">
           </div>
           <div>
             <span class="energy-step-number">01</span>
@@ -197,7 +197,7 @@
 
         <article class="energy-step energy-step-control">
           <div class="energy-step-icon energy-step-image-wrap">
-            <img src="IMG_2026%203.webp" alt="Intelligente Energie" loading="lazy">
+            <img src="IMG_2026%203.webp" alt="Intelligente Energie" width="461" height="778" loading="lazy" decoding="async">
           </div>
           <div>
             <span class="energy-step-number">02</span>
@@ -208,7 +208,7 @@
 
         <article class="energy-step energy-step-heat">
           <div class="energy-step-icon energy-step-image-wrap">
-            <img src="file_0.webp" alt="Wärmepumpe" loading="lazy">
+            <img src="file_0.webp" alt="Wärmepumpe" width="1352" height="912" loading="lazy" decoding="async">
           </div>
           <div>
             <span class="energy-step-number">03</span>
@@ -336,12 +336,12 @@
           <div class="indoor-visual-card glass-card">
             <div class="image-frame-indoor">
               <img src="assets/images/indoor-room.webp" alt="Fachgerechte PV & Wärmepumpen Inneninstallation"
-                class="indoor-main-img" loading="lazy">
+                class="indoor-main-img" loading="lazy" decoding="async">
             </div>
 
             <!-- Floating 3D House Cutaway Badge -->
             <div class="cutaway-floating-badge glass-card" id="cutawayTrigger">
-              <img src="assets/images/house-3d-model.webp" alt="3D-Visualisierung von Heizung und Solarenergie" class="cutaway-thumb" loading="lazy">
+              <img src="assets/images/house-3d-model.webp" alt="3D-Visualisierung von Heizung und Solarenergie" class="cutaway-thumb" width="1024" height="1024" loading="lazy" decoding="async">
               <div class="cutaway-info">
                 <span class="badge-tag">3D-SYSTEMVERBUND</span>
                 <span class="badge-sub">PV-Strom + Wärmepumpe im Haus (Klick)</span>
@@ -786,20 +786,20 @@
 
               <div class="calc-fields-grid">
                 <div class="calc-field">
-                  <label class="field-label">Vor- und Nachname *</label>
+                  <label class="field-label" for="calcUserName">Vor- und Nachname *</label>
                   <input type="text" id="calcUserName" class="calc-input" placeholder="z. B. Max Mustermann" autocomplete="name" required>
                 </div>
                 <div class="calc-field">
-                  <label class="field-label">Telefonnummer (für Rückfragen) *</label>
+                  <label class="field-label" for="calcUserPhone">Telefonnummer (für Rückfragen) *</label>
                   <input type="tel" id="calcUserPhone" class="calc-input" placeholder="z. B. +49 176 12345678" autocomplete="tel" required>
                 </div>
                 <div class="calc-field full-width">
-                  <label class="field-label">E-Mail-Adresse *</label>
+                  <label class="field-label" for="calcUserEmail">E-Mail-Adresse *</label>
                   <input type="email" id="calcUserEmail" class="calc-input" placeholder="z. B. name@beispiel.de" autocomplete="email"
                     required>
                 </div>
                 <div class="calc-field full-width">
-                  <label class="field-label">Ihre Nachricht / Besonderheiten (optional)</label>
+                  <label class="field-label" for="calcUserMsg">Ihre Nachricht / Besonderheiten (optional)</label>
                   <textarea id="calcUserMsg" class="calc-textarea" rows="2"
                     placeholder="z. B. Dachausrichtung, geplante Solarmodule, Baujahr des Hauses..."></textarea>
                 </div>
@@ -1009,7 +1009,7 @@
           <div class="project-img-wrap">
             <img src="assets/images/PV-Kombispeicher & Inneneinheit.webp"
               alt="Viessmann Wärmepumpen Inneneinheit mit Solarpufferspeicher Montage durch ENSON" class="project-img"
-              loading="lazy">
+              loading="lazy" decoding="async">
             <div class="project-overlay"></div>
             <div class="project-badges-bar">
               <span class="proj-badge tech-badge">PV-Kombispeicher & Inneneinheit</span>
@@ -1021,7 +1021,7 @@
         <div class="project-card glass-card">
           <div class="project-img-wrap">
             <img src="assets/images/Wärmepumpe & Solar-Direktantrieb.webp"
-              alt="Viessmann Vitocal Außeneinheit gekoppelt an Photovoltaik-Dachanlage" class="project-img" loading="lazy">
+              alt="Viessmann Vitocal Außeneinheit gekoppelt an Photovoltaik-Dachanlage" class="project-img" loading="lazy" decoding="async">
             <div class="project-overlay"></div>
             <div class="project-badges-bar">
               <span class="proj-badge tech-badge">Wärmepumpe & Solar-Direktantrieb</span>
@@ -1034,7 +1034,7 @@
           <div class="project-img-wrap">
             <img src="assets/images/Flüsterleise PV-Hybridtechnik.webp"
               alt="Vaillant aroTHERM plus Wärmepumpe mit solarer Eigenverbrauchsoptimierung" class="project-img"
-              loading="lazy">
+              loading="lazy" decoding="async">
             <div class="project-overlay"></div>
             <div class="project-badges-bar">
               <span class="proj-badge tech-badge">Flüsterleise PV-Hybridtechnik</span>
@@ -1158,21 +1158,25 @@
 
                 <div class="form-row dual-fields">
                   <div class="input-group">
+                    <label class="sr-only" for="userName">Vorname / Name *</label>
                     <input type="text" id="userName" name="userName" placeholder="Vorname / Name *" autocomplete="name" required>
                   </div>
                   <div class="input-group">
+                    <label class="sr-only" for="userPhone">Telefon *</label>
                     <input type="tel" id="userPhone" name="userPhone" placeholder="Telefon *" autocomplete="tel" required>
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="input-group">
+                    <label class="sr-only" for="userEmail">E-Mail *</label>
                     <input type="email" id="userEmail" name="userEmail" placeholder="E-Mail *" autocomplete="email" required>
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="input-group">
+                    <label class="sr-only" for="userMessage">Ihre Nachricht</label>
                     <textarea id="userMessage" name="userMessage" rows="3"
                       placeholder="Ihre Nachricht / Gewünschtes System (PV, Wärmepumpe oder Kombisystem)"></textarea>
                   </div>
@@ -1324,7 +1328,7 @@
       <div class="modal-content glass-card">
         <button class="modal-close" id="modalClose" aria-label="Schließen">&times;</button>
         <div class="modal-body">
-          <img src="assets/images/house-3d-model.webp" alt="3D-Architektur-Schnittmodell für Photovoltaik und Wärmepumpe" class="modal-cutaway-img" loading="lazy">
+          <img src="assets/images/house-3d-model.webp" alt="3D-Architektur-Schnittmodell für Photovoltaik und Wärmepumpe" class="modal-cutaway-img" width="1024" height="1024" loading="lazy" decoding="async">
           <div class="modal-desc">
             <h3>Intelligenter Energie- & Wärmefluss im Gebäude</h3>
             <p>Das ENSON Gesamtsystem vernetzt Ihre Photovoltaikanlage auf dem Dach nahtlos mit Batteriespeicher, Wechselrichter und hocheffizienter Wärmepumpe. Der eigens produzierte Solarstrom speist prioritär die Wärmepumpe zur Heizung, Warmwasserbereitung und Sommerkühlung (Effizienzklasse A+++) – für bis zu 80% Unabhängigkeit vom öffentlichen Stromnetz.</p>
