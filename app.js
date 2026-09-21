@@ -604,6 +604,43 @@ function initHeroBackgroundVideo() {
   video.muted = true;
   video.defaultMuted = true;
 
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (prefersReducedMotion || connection?.saveData) return;
+
+  const source = video.querySelector('source[data-src]');
+  if (!source) return;
+
+  let isLoaded = false;
+  const loadVideo = () => {
+    if (isLoaded) return;
+    isLoaded = true;
+    source.src = source.dataset.src;
+    source.removeAttribute('data-src');
+    video.load();
+    tryPlay();
+  };
+
+  const scheduleVideo = () => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(loadVideo, { timeout: 2500 });
+    } else {
+      window.setTimeout(loadVideo, 1800);
+    }
+  };
+
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        scheduleVideo();
+        videoObserver.disconnect();
+      }
+    }, { rootMargin: '100px' });
+    videoObserver.observe(video);
+  } else {
+    scheduleVideo();
+  }
+
   const tryPlay = () => {
     const playPromise = video.play();
     if (playPromise !== undefined) {

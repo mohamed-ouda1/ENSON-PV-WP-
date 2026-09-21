@@ -106,6 +106,16 @@ body {
   background: radial-gradient(circle at 50% 0%, #2D343B 0%, #22272B 45%, #1A1E22 100%);
 }
 
+/* Keep below-the-fold sections out of the initial render work. */
+.energy-synergy-section,
+.benefits-section,
+.solutions-section,
+.projects-section,
+.contact-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 700px;
+}
+
 .container {
   width: 100%;
   max-width: 1240px;
@@ -408,7 +418,7 @@ body {
   background-color: var(--bg-primary);
   background-image:
     linear-gradient(to right, rgba(32, 37, 41, 0.96) 0%, rgba(32, 37, 41, 0.88) 40%, rgba(32, 37, 41, 0.4) 75%, rgba(32, 37, 41, 0.85) 100%),
-    url('assets/images/hero-bg.webp');
+    url('assets/images/hero.webp');
   background-position: center right;
   background-repeat: no-repeat;
   background-size: cover;
