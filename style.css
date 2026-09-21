@@ -2589,10 +2589,23 @@ body {
   }
   
   .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
+    display: flex;
+    gap: 16px;
     margin-top: 24px;
     margin-bottom: 24px;
+    padding: 4px 4px 14px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    touch-action: pan-x;
+  }
+
+  .project-card {
+    flex: 0 0 auto;
+    width: min(82vw, 340px);
+    min-width: min(82vw, 340px);
+    scroll-snap-align: start;
   }
   
   .project-img-wrap {
