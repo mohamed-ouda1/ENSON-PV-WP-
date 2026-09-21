@@ -911,6 +911,47 @@ body {
   gap: 16px;
   align-items: start;
   min-width: 0;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  --pulse-color: rgba(216, 194, 122, 0.75);
+  --pulse-glow: rgba(216, 194, 122, 0.45);
+  --pulse-glow-outer: rgba(201, 168, 91, 0.22);
+  --pulse-glow-inner: rgba(255, 230, 150, 0.3);
+  --pulse-core: rgba(216, 194, 122, 0.12);
+  --pulse-halo: rgba(216, 194, 122, 0.3);
+}
+
+.energy-step:hover {
+  transform: translateY(-3px);
+}
+
+/* Step 01: Solarstrom (Warm Champagne Sun Gold) */
+.energy-step-solar {
+  --pulse-color: rgba(229, 191, 98, 0.85);
+  --pulse-glow: rgba(216, 194, 122, 0.5);
+  --pulse-glow-outer: rgba(201, 168, 91, 0.25);
+  --pulse-glow-inner: rgba(255, 235, 160, 0.35);
+  --pulse-core: rgba(229, 191, 98, 0.14);
+  --pulse-halo: rgba(216, 194, 122, 0.35);
+}
+
+/* Step 02: Intelligente Energie (Smart Tech Cyan) */
+.energy-step-control {
+  --pulse-color: rgba(56, 222, 245, 0.85);
+  --pulse-glow: rgba(56, 222, 245, 0.5);
+  --pulse-glow-outer: rgba(56, 222, 245, 0.24);
+  --pulse-glow-inner: rgba(140, 245, 255, 0.35);
+  --pulse-core: rgba(56, 222, 245, 0.14);
+  --pulse-halo: rgba(56, 222, 245, 0.32);
+}
+
+/* Step 03: Wärmepumpe (Renewable Neon Green) */
+.energy-step-heat {
+  --pulse-color: rgba(92, 255, 138, 0.85);
+  --pulse-glow: rgba(92, 255, 138, 0.5);
+  --pulse-glow-outer: rgba(92, 255, 138, 0.24);
+  --pulse-glow-inner: rgba(160, 255, 190, 0.35);
+  --pulse-core: rgba(92, 255, 138, 0.14);
+  --pulse-halo: rgba(92, 255, 138, 0.32);
 }
 
 .energy-step-icon {
@@ -941,61 +982,79 @@ body {
   justify-content: center;
 }
 
-.energy-step-image-wrap::before,
-.energy-step-image-wrap::after {
-  content: '';
+/* Ambient Backlight Halo behind image */
+.energy-wave-halo {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 58px;
-  height: 58px;
-  border: 1px solid var(--energy-pulse-color);
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--energy-pulse-glow) 0%, transparent 68%);
-  box-shadow: 0 0 18px var(--energy-pulse-glow), inset 0 0 12px var(--energy-pulse-glow);
-  opacity: 0.5;
+  background: radial-gradient(circle, var(--pulse-halo) 0%, transparent 72%);
+  filter: blur(10px);
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.72);
-  z-index: -1;
-  animation: energyImageWave 3.6s ease-out infinite;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  animation: energyHaloBreathe 3.6s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
-.energy-step-image-wrap::after {
-  animation-delay: 1.8s;
+/* Concentric Smooth Light Wave Rings */
+.energy-wave-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 1.5px solid var(--pulse-color);
+  background: radial-gradient(circle, var(--pulse-core) 0%, transparent 66%);
+  box-shadow: 0 0 14px var(--pulse-glow), 0 0 28px var(--pulse-glow-outer), inset 0 0 10px var(--pulse-glow-inner);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.66);
+  animation: energyWaveSpread 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  will-change: transform, opacity;
 }
 
-.energy-step-solar .energy-step-image-wrap,
-.energy-step-heat .energy-step-image-wrap {
-  --energy-pulse-color: var(--gold-accent);
-  --energy-pulse-glow: rgba(216, 194, 122, 0.3);
+.energy-wave-ring.ring-1 {
+  animation-delay: 0s;
 }
 
-.energy-step-control .energy-step-image-wrap::before {
-  --energy-pulse-color: var(--neon-green);
-  --energy-pulse-glow: rgba(92, 255, 138, 0.28);
+.energy-wave-ring.ring-2 {
   animation-delay: 1.2s;
 }
 
-.energy-step-heat .energy-step-image-wrap::before {
+.energy-wave-ring.ring-3 {
   animation-delay: 2.4s;
 }
 
-.energy-step-heat .energy-step-image-wrap::after {
-  animation-delay: 4.2s;
-}
-
 .energy-step-image-wrap img {
+  position: relative;
+  z-index: 2;
   display: block;
   width: 90px;
   height: 90px;
   object-fit: contain;
   border-radius: 0;
-  transform: none;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.18));
+  transform: translateZ(0);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+}
+
+.energy-step:hover .energy-step-image-wrap img {
+  transform: scale(1.06) translateY(-2px);
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.42)) drop-shadow(0 0 12px var(--pulse-glow));
+}
+
+.energy-step:hover .energy-wave-halo {
+  filter: blur(12px) brightness(1.25);
+  transform: translate(-50%, -50%) scale(1.15);
 }
 
 .energy-step-solar .energy-step-icon { color: var(--gold-accent); border-color: transparent; }
-.energy-step-control .energy-step-icon { color: #B9C5CD; border-color: transparent; }
+.energy-step-control .energy-step-icon { color: #38DEF5; border-color: transparent; }
 .energy-step-heat .energy-step-icon { color: var(--neon-green); border-color: transparent; }
 
 .energy-step-number {
@@ -1025,21 +1084,38 @@ body {
   to { transform: translateX(600%); }
 }
 
-@keyframes energyImageWave {
+@keyframes energyWaveSpread {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.72);
+    transform: translate(-50%, -50%) scale(0.66);
   }
-  12% {
-    opacity: 0.62;
+  15% {
+    opacity: 0.85;
   }
-  72% {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(1.48);
+  45% {
+    opacity: 0.48;
+  }
+  78% {
+    opacity: 0.15;
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1.48);
+    transform: translate(-50%, -50%) scale(1.95);
+  }
+}
+
+@keyframes energyHaloBreathe {
+  0% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.12);
+    opacity: 0.88;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.55;
   }
 }
 
@@ -1082,15 +1158,20 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .energy-flow-line span {
-    animation: none;
+  .energy-flow-line span,
+  .energy-wave-ring,
+  .energy-wave-halo {
+    animation: none !important;
   }
 
-  .energy-step-image-wrap::before,
-  .energy-step-image-wrap::after {
-    animation: none;
-    opacity: 0.42;
-    transform: translate(-50%, -50%) scale(0.92);
+  .energy-wave-ring.ring-1 {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .energy-wave-ring.ring-2,
+  .energy-wave-ring.ring-3 {
+    display: none;
   }
 }
 
