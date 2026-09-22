@@ -1,6 +1,6 @@
 /* ==========================================================================
    ENSON WÄRMEPUMPEN - INTERACTIVE JAVASCRIPT
-   KfW Subsidy Calculator | Modals | Mobile Nav & Lead Form | High-Performance Engine
+   Energy Flow Canvas | KfW Subsidy Calculator | Modals | Mobile Nav & Lead Form
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,9 +16,229 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. Initialize Lead Form & Toast Notification
   initLeadForm();
 
-  // 5. Initialize Hero Background Video (Mobile Autoplay Safeguard & GPU Pause)
+  // 5. Initialize Hero Background Video (Mobile Autoplay Safeguard)
   initHeroBackgroundVideo();
 });
+
+/* ==========================================================================
+   1. ENERGY FLOW CANVAS ANIMATION (SOLAR & WÄRMEPUMPEN SYNERGIE)
+   ========================================================================== */
+function initEnergyCanvas() {
+  const canvas = document.getElementById('energyCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    if (canvas.parentElement) {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    }
+  }
+  let isResizeTicking = false;
+  function onWindowResize() {
+    if (!isResizeTicking) {
+      window.requestAnimationFrame(() => {
+        resizeCanvas();
+        isResizeTicking = false;
+      });
+      isResizeTicking = true;
+    }
+  }
+
+  resizeCanvas();
+  window.addEventListener('resize', onWindowResize, { passive: true });
+
+  const particles = [];
+  const particleCount = window.matchMedia('(max-width: 768px)').matches ? 20 : 28;
+
+  // ==========================================================================
+  // ENERGY PATHS – aligned with the hero-house video frame
+  // ==========================================================================
+  const paths = [
+    {
+      type: 'solar',
+      color: '#FFD060',
+      glow: '#FFC940',
+      strokeColor: 'rgba(255, 200, 60, 0.45)',
+      points: [
+        { x: 0.52, y: 0.28 },
+        { x: 0.48, y: 0.39 },
+        { x: 0.44, y: 0.47 },
+        { x: 0.44, y: 0.58 },
+        { x: 0.40, y: 0.64 },
+        { x: 0.40, y: 0.72 }
+      ]
+    },
+    {
+      type: 'solar',
+      color: '#E5C96A',
+      glow: '#FFD269',
+      strokeColor: 'rgba(229, 200, 100, 0.38)',
+      points: [
+        { x: 0.52, y: 0.28 },
+        { x: 0.61, y: 0.38 },
+        { x: 0.66, y: 0.48 },
+        { x: 0.66, y: 0.57 },
+        { x: 0.80, y: 0.57 },
+        { x: 0.88, y: 0.57 }
+      ]
+    },
+    {
+      type: 'thermal',
+      color: '#5CFF8A',
+      glow: '#10E88A',
+      strokeColor: 'rgba(92, 255, 138, 0.40)',
+      points: [
+        { x: 0.40, y: 0.72 },
+        { x: 0.48, y: 0.72 },
+        { x: 0.56, y: 0.67 },
+        { x: 0.66, y: 0.67 },
+        { x: 0.66, y: 0.57 }
+      ]
+    },
+    {
+      type: 'thermal',
+      color: '#5CFF8A',
+      glow: '#10E88A',
+      strokeColor: 'rgba(92, 255, 138, 0.40)',
+      points: [
+        { x: 0.40, y: 0.72 },
+        { x: 0.31, y: 0.72 },
+        { x: 0.22, y: 0.72 },
+        { x: 0.18, y: 0.66 }
+      ]
+    },
+    {
+      type: 'thermal',
+      color: '#5CFF8A',
+      glow: '#10E88A',
+      strokeColor: 'rgba(92, 255, 138, 0.40)',
+      points: [
+        { x: 0.66, y: 0.57 },
+        { x: 0.75, y: 0.57 },
+        { x: 0.84, y: 0.57 },
+        { x: 0.84, y: 0.49 }
+      ]
+    },
+
+    // ── HEAT PATH 3: heat pump → up left wall → attic heating (upper floor ♨)
+    {
+      type: 'thermal',
+      color: '#4EE87A',
+      glow: '#10E88A',
+      strokeColor: 'rgba(92, 255, 138, 0.30)',
+      points: [
+        { x: 0.34, y: 0.73 }, // Wärmepumpe
+        { x: 0.32, y: 0.62 }, // up the left wall
+        { x: 0.30, y: 0.50 }, // mid-wall
+        { x: 0.32, y: 0.40 }, // upper floor left wall
+        { x: 0.36, y: 0.36 }  // ♨ upper floor heat symbol (left side)
+      ]
+    }
+  ];
+
+  class EnergyParticle {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.pathIndex = Math.floor(Math.random() * paths.length);
+      this.pathData = paths[this.pathIndex];
+      this.points = this.pathData.points;
+      this.progress = Math.random();
+      this.speed = 0.003 + Math.random() * 0.004;
+      this.radius = 2.2 + Math.random() * 2.2;
+      this.alpha = 0.45 + Math.random() * 0.55;
+    }
+
+    update() {
+      this.progress += this.speed;
+      if (this.progress > 1) {
+        this.reset();
+        this.progress = 0;
+      }
+    }
+
+    getPosition() {
+      const totalSegments = this.points.length - 1;
+      const currentSegment = Math.min(Math.floor(this.progress * totalSegments), totalSegments - 1);
+      const segmentProgress = (this.progress * totalSegments) - currentSegment;
+
+      const p0 = this.points[currentSegment];
+      const p1 = this.points[currentSegment + 1];
+
+      const x = (p0.x + (p1.x - p0.x) * segmentProgress) * canvas.width;
+      const y = (p0.y + (p1.y - p0.y) * segmentProgress) * canvas.height;
+
+      return { x, y };
+    }
+
+    draw(ctx) {
+      const pos = this.getPosition();
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.pathData.color;
+      ctx.shadowColor = this.pathData.glow;
+      ctx.shadowBlur = 10;
+      ctx.globalAlpha = this.alpha;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new EnergyParticle());
+  }
+
+  function drawPaths() {
+    ctx.save();
+    paths.forEach(p => {
+      ctx.beginPath();
+      ctx.moveTo(p.points[0].x * canvas.width, p.points[0].y * canvas.height);
+      for (let i = 1; i < p.points.length; i++) {
+        ctx.lineTo(p.points[i].x * canvas.width, p.points[i].y * canvas.height);
+      }
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = p.strokeColor;
+      ctx.lineWidth = 2.6;
+      ctx.shadowColor = p.glow;
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  let animationFrameId = null;
+  let isCanvasVisible = true;
+
+  function animate() {
+    animationFrameId = null;
+    if (!isCanvasVisible) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPaths();
+
+    particles.forEach(p => {
+      p.update();
+      p.draw(ctx);
+    });
+
+    animationFrameId = requestAnimationFrame(animate);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isCanvasVisible = entry.isIntersecting;
+      if (isCanvasVisible && animationFrameId === null) animate();
+    });
+    visibilityObserver.observe(canvas);
+  }
+
+  animate();
+}
 
 /* ==========================================================================
    2. FÖRDERUNGS-CHECK & WÄRMEPUMPEN + PV MULTI-STEP WIZARD 2026
@@ -302,26 +522,38 @@ function initNavigation() {
     });
   }
 
-  // Active Link Highlight on Scroll via IntersectionObserver (Zero forced reflows, locked 60FPS)
+  // Active Link Highlight on Scroll (throttled via requestAnimationFrame)
   const sections = document.querySelectorAll('section[id]');
-  if (sections.length && 'IntersectionObserver' in window) {
-    const navObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const currentId = entry.target.getAttribute('id');
-          navLinks.forEach(link => {
-            const isMatch = link.getAttribute('href') === `#${currentId}`;
-            link.classList.toggle('active', isMatch);
-          });
-        }
-      });
-    }, {
-      rootMargin: '-20% 0px -65% 0px',
-      threshold: 0
+  if (!sections.length) return;
+  let isScrollTicking = false;
+
+  function updateActiveNavOnScroll() {
+    let current = '';
+    const scrollPos = window.scrollY || window.pageYOffset || 0;
+    sections.forEach(sec => {
+      const secTop = sec.offsetTop - 140;
+      const secHeight = sec.clientHeight;
+      if (scrollPos >= secTop && scrollPos < secTop + secHeight) {
+        current = sec.getAttribute('id');
+      }
     });
 
-    sections.forEach(sec => navObserver.observe(sec));
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+
+    isScrollTicking = false;
   }
+
+  window.addEventListener('scroll', () => {
+    if (!isScrollTicking) {
+      window.requestAnimationFrame(updateActiveNavOnScroll);
+      isScrollTicking = true;
+    }
+  }, { passive: true });
 }
 
 /* ==========================================================================
@@ -363,7 +595,7 @@ function initLeadForm() {
 }
 
 /* ==========================================================================
-   6. HERO DYNAMIC BACKGROUND VIDEO INITIALIZER & GPU RESOURCE OPTIMIZER
+   6. HERO DYNAMIC BACKGROUND VIDEO INITIALIZER & MOBILE SAFEGUARD
    ========================================================================== */
 function initHeroBackgroundVideo() {
   const video = document.querySelector('.hero-main-video');
@@ -391,17 +623,30 @@ function initHeroBackgroundVideo() {
 
   const scheduleVideo = () => {
     if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(loadVideo, { timeout: 3000 });
+      window.requestIdleCallback(loadVideo, { timeout: 2500 });
     } else {
-      window.setTimeout(loadVideo, 2000);
+      window.setTimeout(loadVideo, 1800);
     }
   };
+
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        scheduleVideo();
+        videoObserver.disconnect();
+      }
+    }, { rootMargin: '100px' });
+    videoObserver.observe(video);
+  } else {
+    scheduleVideo();
+  }
 
   const tryPlay = () => {
     const playPromise = video.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Browser prevented autoplay (e.g. iOS Low Power Mode).
+        // Browser prevented autoplay (e.g., iOS Low Power Mode).
+        // Poster image remains visible, and we listen for first touch to resume smoothly.
         const onFirstTouch = () => {
           video.play().catch(() => {});
           window.removeEventListener('touchstart', onFirstTouch);
@@ -415,24 +660,5 @@ function initHeroBackgroundVideo() {
     }
   };
 
-  // Viewport Observer: Only load when visible and PAUSE when scrolled out of view to free GPU/CPU
-  if ('IntersectionObserver' in window) {
-    const videoObserver = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        if (!isLoaded) {
-          scheduleVideo();
-        } else {
-          tryPlay();
-        }
-      } else {
-        // Scrolled away: Pause 1080p decoding so scrolling remains 100% smooth!
-        if (isLoaded && !video.paused) {
-          video.pause();
-        }
-      }
-    }, { threshold: 0.05 });
-    videoObserver.observe(video);
-  } else {
-    scheduleVideo();
-  }
+  tryPlay();
 }
