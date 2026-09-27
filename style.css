@@ -3374,19 +3374,19 @@ body {
   }
 
   .hero-bg-image {
-    object-position: 50% 28%;
-    opacity: 0.92;
-    filter: brightness(0.98) contrast(1.06) saturate(1.15);
-    transform: translate(-50%, -50%) scale(1.04);
+    object-position: 50% 35%;
+    opacity: 1;
+    filter: brightness(1.16) contrast(1.08) saturate(1.2);
+    transform: translate(-50%, -50%) scale(1.02);
   }
 
   .hero-video-overlay {
     background: linear-gradient(
       180deg,
-      rgba(20, 24, 27, 0.72) 0%,
-      rgba(20, 24, 27, 0.48) 32%,
-      rgba(20, 24, 27, 0.22) 65%,
-      rgba(20, 24, 27, 0.82) 100%
+      rgba(20, 24, 27, 0.58) 0%,
+      rgba(20, 24, 27, 0.34) 32%,
+      rgba(20, 24, 27, 0.12) 65%,
+      rgba(20, 24, 27, 0.68) 100%
     );
   }
 
